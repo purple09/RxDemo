@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Pair<String, Class>> datas = new ArrayList<>();
         initDatas(datas);
         MainAdapter adapter = new MainAdapter(datas);
-        adapter.mObservable.subscribe(position ->
+        adapter.mSubject.subscribe(position ->
                 startActivity(new Intent(MainActivity.this, datas.get(position).second)));
         recyclerView.setAdapter(adapter);
 
@@ -41,6 +41,6 @@ public class MainActivity extends AppCompatActivity {
     private void initDatas(List<Pair<String, Class>> datas) {
         datas.add(new Pair("just test", TestActivity.class));
         datas.add(new Pair("timer", TimerActivity.class));
-        datas.add(new Pair("just test", TestActivity.class));
+        datas.add(new Pair("search", SearchActivity.class));
     }
 }

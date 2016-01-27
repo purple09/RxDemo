@@ -36,7 +36,7 @@ public class TestActivity extends AppCompatActivity {
             sendBroadcast(intent);
         });
 
-        MyBroadcastReceiver.mObservable
+        MyBroadcastReceiver.mSubject
                 .map(intent -> intent.getStringExtra("time"))
                 .filter(time -> time != null && !"".equals(time))
                 .subscribe(time -> tv.setText(time));

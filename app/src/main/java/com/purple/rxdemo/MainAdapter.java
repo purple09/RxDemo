@@ -11,18 +11,15 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observable;
 import rx.subjects.PublishSubject;
 
 public class MainAdapter extends RecyclerView.Adapter {
     private List<Pair<String, Class>> datas;
-    public Observable<Integer> mObservable;
-    private PublishSubject<Integer> mSubject;
+    public PublishSubject<Integer> mSubject;
 
     public MainAdapter(List<Pair<String, Class>> datas) {
         this.datas = datas;
         mSubject = PublishSubject.create();
-        mObservable = mSubject.asObservable();
     }
 
     public int getItemCount() {
