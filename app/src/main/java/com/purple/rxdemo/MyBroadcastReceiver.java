@@ -11,7 +11,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
     public static PublishSubject<Intent> mSubject = PublishSubject.create();
 
     public void onReceive(Context context, Intent intent) {
-        if ((intent != null) && ("com.cx.rxdemo.MyBroadcastReceiver".equals(intent.getAction())))
+        if ((intent != null) && (ACTION.equals(intent.getAction())))
             mSubject.onNext(intent);
     }
 }
