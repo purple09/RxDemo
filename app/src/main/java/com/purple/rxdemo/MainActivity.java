@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.recyclerview)
     RecyclerView recyclerView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,13 +33,12 @@ public class MainActivity extends AppCompatActivity {
         adapter.mSubject.subscribe(position ->
                 startActivity(new Intent(MainActivity.this, datas.get(position).second)));
         recyclerView.setAdapter(adapter);
-
     }
 
 
     private void initDatas(List<Pair<String, Class>> datas) {
         datas.add(new Pair("just test", TestActivity.class));
         datas.add(new Pair("timer", TimerActivity.class));
-        datas.add(new Pair("search", SearchActivity.class));
+        datas.add(new Pair("okhttp", OkHttpActivity.class));
     }
 }
