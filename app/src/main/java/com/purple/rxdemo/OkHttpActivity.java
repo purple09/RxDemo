@@ -61,7 +61,6 @@ public class OkHttpActivity extends AppCompatActivity {
                 v.setEnabled(false);
                 MyEntity entity = new MyEntity(content);
                 String json = entity.toString();
-                //TODO 这个服务好像有问题，返回信息与预期不符。年后自己搭个本地服务器。
                 subscription = MyHttp.post(baseUrl+"/testPost", json)
                         .compose(observable -> observable.subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread()))
