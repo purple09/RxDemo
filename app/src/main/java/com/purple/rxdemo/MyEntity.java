@@ -12,13 +12,13 @@ import com.alibaba.fastjson.JSON;
  */
 public class MyEntity {
 
-    public String str;
+    public String content;
 
     public MyEntity(String content) {
-        this.str = content;
+        this.content = content;
     }
 
-     @Override
+    @Override
     public String toString() {
         return JSON.toJSONString(this);
     }
