@@ -10,14 +10,6 @@ import java.util.Map;
 import rx.Observable;
 import rx.Subscriber;
 
-/**
- * @Description: TODO describe this class
- * @Copyright: Copyright (c) 2016 chexiang.com. All right reserved.
- * @Author: guizhen
- * @Date: 2016/2/1 11:50
- * @Modifier: guizhen
- * @Update: 2016/2/1 11:50
- */
 public class MyHttpSubscribe implements Observable.OnSubscribe<MyHttpResult> {
 
     private String url;

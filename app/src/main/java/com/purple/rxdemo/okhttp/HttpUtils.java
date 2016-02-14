@@ -7,14 +7,6 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @Description: 工具类
- * @Copyright: Copyright (c) 2015 chexiang.com. All right reserved.
- * @Author: zhangshunjie
- * @Date: 2015/11/17
- * @Modifier: zhangshunjie
- * @Update: 2015/11/17
- */
 public class HttpUtils {
 
     public static final String TAG = "OKClient";

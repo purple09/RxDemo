@@ -1,15 +1,7 @@
 package com.purple.rxdemo;
 
-import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 
-/**
- * @Description: TODO describe this class
- * @Copyright: Copyright (c) 2016 chexiang.com. All right reserved.
- * @Author: guizhen
- * @Date: 2016/2/1 14:25
- * @Modifier: guizhen
- * @Update: 2016/2/1 14:25
- */
 public class MyEntity {
 
     public String content;
@@ -20,6 +12,6 @@ public class MyEntity {
 
     @Override
     public String toString() {
-        return JSON.toJSONString(this);
+        return new Gson().toJson(this);
     }
 }

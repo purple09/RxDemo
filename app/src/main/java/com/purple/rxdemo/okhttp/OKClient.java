@@ -10,14 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @Description: Http请求工具类
- * @Copyright: Copyright (c) 2015 chexiang.com. All right reserved.
- * @Author: zhangshunjie
- * @Date: 2015/11/17
- * @Modifier: zhangshunjie
- * @Update: 2015/11/17
- */
 public class OKClient {
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=" + HttpUtils.DEFAULT_CHARSET);

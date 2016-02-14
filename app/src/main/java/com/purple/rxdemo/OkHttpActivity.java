@@ -9,24 +9,28 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.purple.rxdemo.fastjson.FastjsonConverterFactory;
+import com.google.gson.Gson;
 import com.purple.rxdemo.okhttp.MyHttp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class OkHttpActivity extends AppCompatActivity {
+
+    public static final String baseUrl="http://10.47.17.135:3000";
 
     @Bind(R.id.et_content)
     EditText et;
@@ -58,7 +62,7 @@ public class OkHttpActivity extends AppCompatActivity {
                 MyEntity entity = new MyEntity(content);
                 String json = entity.toString();
                 //TODO 这个服务好像有问题，返回信息与预期不符。年后自己搭个本地服务器。
-                subscription = MyHttp.post("http://apis.baidu.com/tutusoft/shajj/shajj", json)
+                subscription = MyHttp.post(baseUrl+"/testPost", json)
                         .compose(observable -> observable.subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread()))
                         .map(myHttpResult -> {
@@ -104,34 +108,28 @@ public class OkHttpActivity extends AppCompatActivity {
             if (content != null && !"".equals(content.trim())) {
                 v.setEnabled(false);
                 MyEntity entity = new MyEntity(content);
-                subscription = api.word(entity)
+                subscription = api.post(entity)
                         .compose(observable -> observable.subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread()))
-                        /*.map(myHttpResult -> {
-                            int code = myHttpResult.code;
-                            JSONObject body = myHttpResult.body;
+                        .map(result -> {
 
                             Map<String, Object> map = new ArrayMap<>();
-                            Iterator<String> iterator = body.keys();
-                            try {
-                                while (iterator.hasNext()) {
-                                    String key = iterator.next();
-                                    map.put(key, body.get(key));
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            map.put("code", result.code);
+                            map.put("msg", result.msg);
+                            map.put("time", new SimpleDateFormat().format(result.time));
+                            map.put("postinfo", result.postinfo);
+
                             return map;
-                        })*/
+                        })
                         .subscribe(
 
                                 map -> {
-                                    Log.e("okhttpactivity", JSON.toJSONString(map));
-                                    /*StringBuffer sb = new StringBuffer();
+                                    Log.e("okhttpactivity", new Gson().toJson(map));
+                                    StringBuffer sb = new StringBuffer();
                                     for (String key : map.keySet()) {
                                         sb.append(key + " ：" + map.get(key) + "\n");
                                     }
-                                    tv.setText(sb.toString());*/
+                                    tv.setText(sb.toString());
                                 },
                                 error -> {
                                     error.printStackTrace();
@@ -151,8 +149,9 @@ public class OkHttpActivity extends AppCompatActivity {
     private Api initApi() {
 
         return new Retrofit.Builder()
-                .baseUrl("http://apis.baidu.com")
-                .addConverterFactory(FastjsonConverterFactory.create())
+                .baseUrl(baseUrl)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .build().create(Api.class);
     }
 
