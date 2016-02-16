@@ -10,13 +10,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.purple.rxdemo.okhttp.MyHttp;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.text.SimpleDateFormat;
-import java.util.Iterator;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -24,13 +21,14 @@ import butterknife.ButterKnife;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class OkHttpActivity extends AppCompatActivity {
 
-    public static final String baseUrl="http://10.47.17.135:3000";
+    public static final String baseUrl = "http://10.47.17.135:3000";
 
     @Bind(R.id.et_content)
     EditText et;
@@ -61,33 +59,25 @@ public class OkHttpActivity extends AppCompatActivity {
                 v.setEnabled(false);
                 MyEntity entity = new MyEntity(content);
                 String json = entity.toString();
-                subscription = MyHttp.post(baseUrl+"/testPost", json)
+                subscription = MyHttp.post(baseUrl + "/testPost", json)
                         .compose(observable -> observable.subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread()))
                         .map(myHttpResult -> {
                             int code = myHttpResult.code;
-                            JSONObject body = myHttpResult.body;
+                            String result = myHttpResult.json;
+                            //这里是故意用map的形式。
+                            Map<String, Object> map = new Gson().fromJson(result, new TypeToken<Map<String, Object>>() {
+                            }.getType());
 
-                            Map<String, Object> map = new ArrayMap<>();
-                            Iterator<String> iterator = body.keys();
-                            try {
-                                while (iterator.hasNext()) {
-                                    String key = iterator.next();
-                                    map.put(key, body.get(key));
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            return map;
+                            StringBuffer sb = new StringBuffer();
+                            Observable.from(map.entrySet()).subscribe(entry ->
+                                            sb.append(entry.getKey() + " ：" + entry.getValue() + "\n")
+                            );
+
+                            return sb.toString();
                         })
                         .subscribe(
-                                map -> {
-                                    StringBuffer sb = new StringBuffer();
-                                    for (String key : map.keySet()) {
-                                        sb.append(key + " ：" + map.get(key) + "\n");
-                                    }
-                                    tv.setText(sb.toString());
-                                },
+                                str -> tv.setText(str),
                                 error -> {
                                     error.printStackTrace();
                                     tv.setText(error.toString());

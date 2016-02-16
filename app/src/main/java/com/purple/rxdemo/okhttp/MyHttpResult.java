@@ -1,16 +1,14 @@
 package com.purple.rxdemo.okhttp;
 
-import org.json.JSONObject;
-
 public class MyHttpResult {
 
     public int code;
 
-    public JSONObject body;
+    public String json;
 
-    public MyHttpResult(int code, JSONObject body) {
+    public MyHttpResult(int code, String json) {
         this.code = code;
-        this.body = body;
+        this.json = json;
     }
 
 }

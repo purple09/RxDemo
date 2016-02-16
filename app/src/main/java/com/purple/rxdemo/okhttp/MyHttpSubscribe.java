@@ -2,8 +2,6 @@ package com.purple.rxdemo.okhttp;
 
 import com.squareup.okhttp.Response;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.Map;
 
@@ -33,9 +31,7 @@ public class MyHttpSubscribe implements Observable.OnSubscribe<MyHttpResult> {
         try {
             Response response = client.execute(HttpMethod.POST, url, null, headers, json);
             if (response.isSuccessful()) {
-                int code = response.code();
-                JSONObject body = new JSONObject(response.body().string());
-                subscriber.onNext(new MyHttpResult(code, body));
+                subscriber.onNext(new MyHttpResult(response.code(), response.body().string()));
                 subscriber.onCompleted();
             } else {
                 subscriber.onError(new IOException("Unexpected code " + response));
