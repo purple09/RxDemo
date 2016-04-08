@@ -23,8 +23,6 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class OkHttpActivity extends AppCompatActivity {
 
@@ -60,8 +58,7 @@ public class OkHttpActivity extends AppCompatActivity {
                 MyEntity entity = new MyEntity(content);
                 String json = entity.toString();
                 subscription = MyHttp.post(baseUrl + "/testPost", json)
-                        .compose(observable -> observable.subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread()))
+                        .compose(RxUtils.schedulersTransformer())
                         .map(myHttpResult -> {
                             int code = myHttpResult.code;
                             String result = myHttpResult.json;
@@ -73,7 +70,6 @@ public class OkHttpActivity extends AppCompatActivity {
                             Observable.from(map.entrySet()).subscribe(entry ->
                                             sb.append(entry.getKey() + " ：" + entry.getValue() + "\n")
                             );
-
                             return sb.toString();
                         })
                         .subscribe(
@@ -98,8 +94,7 @@ public class OkHttpActivity extends AppCompatActivity {
                 v.setEnabled(false);
                 MyEntity entity = new MyEntity(content);
                 subscription = api.post(entity)
-                        .compose(observable -> observable.subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread()))
+                        .compose(RxUtils.schedulersTransformer())
                         .map(result -> {
 
                             Map<String, Object> map = new ArrayMap<>();
@@ -149,4 +144,5 @@ public class OkHttpActivity extends AppCompatActivity {
         super.onDestroy();
         if (subscription != null && subscription.isUnsubscribed()) subscription.unsubscribe();
     }
+
 }

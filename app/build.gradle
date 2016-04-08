@@ -41,9 +41,11 @@ dependencies {
     compile 'com.squareup.okio:okio:1.3.0'
     compile 'com.squareup.okhttp:okhttp:2.3.0'
     //fastjson的retrofit支持不好，先换成gson。
+
     //compile 'com.alibaba:fastjson:1.2.7'
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.google.code.gson:gson:2.6.1'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
 }

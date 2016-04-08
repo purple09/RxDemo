@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String s = "\n";
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         recyclerView.setHasFixedSize(true);
@@ -40,5 +41,7 @@ public class MainActivity extends AppCompatActivity {
         datas.add(new Pair("just test", TestActivity.class));
         datas.add(new Pair("timer", TimerActivity.class));
         datas.add(new Pair("okhttp", OkHttpActivity.class));
+
+        // datas.add(new Pair("Main2Activity", Main2Activity.class));
     }
 }

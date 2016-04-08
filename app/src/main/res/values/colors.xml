@@ -3,4 +3,35 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+
+
+    <!-- 淡蓝 -->
+    <color name="base_bady_blue">#89c7e9</color>
+    <!-- 底色 -->
+    <color name="base_bottom_colour_efefef">#efefef</color>
+    <!-- 底色 f4f4f4-->
+    <color name="base_bottom_colour_f4f4f4">#f4f4f4</color>
+    <!-- 主色，文字 蓝色 -->
+    <color name="base_essential_colour_if9dbe">#1f9bde</color>
+    <!-- 阴影 -->
+    <color name="base_shadow">#013ca6</color>
+    <!-- 基础橘色，字体 -->
+    <color name="base_origin_ee5400">#ee5400</color>
+    <!-- 基础绿色，字体 -->
+    <color name="base_green_5dab00">#5dab00</color>
+    <!-- ，字体 9b9b9b-->
+    <color name="base_text_9b9b9b">#9b9b9b</color>
+    <!--字体 a5dfff  -->
+    <color name="base_text_a5dfff">#a5dfff</color>
+    <!--  字体555555-->
+    <color name="base_text_555555">#555555</color>
+    <!-- 线框 -->
+    <color name="base_wireframe_cccccc">#cccccc</color>
+    <!-- 更多设置页面背景颜色 -->
+    <color name="base_moresetting_ef">#efefef</color>
+    <!-- App 设计颜色规范 -->
+
+
+
 </resources>
