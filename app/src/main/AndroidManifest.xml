@@ -36,10 +36,6 @@
         </activity>
         <activity android:name=".OkHttpActivity">
         </activity>
-        <activity
-            android:name=".Main2Activity"
-            android:theme="@style/StyledIndicators">
-        </activity>
         <activity android:name=".ViewActivity">
         </activity>
     </application>
