@@ -2,7 +2,6 @@ package com.purple.rxdemo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
@@ -13,7 +12,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Bind(R.id.recyclerview)
     RecyclerView recyclerView;
@@ -31,8 +30,10 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Pair<String, Class>> datas = new ArrayList<>();
         initDatas(datas);
         MainAdapter adapter = new MainAdapter(datas);
-        adapter.mSubject.subscribe(position ->
-                startActivity(new Intent(MainActivity.this, datas.get(position).second)));
+        rx(
+                adapter.mSubject.subscribe(position ->
+                        startActivity(new Intent(MainActivity.this, datas.get(position).second)))
+        );
         recyclerView.setAdapter(adapter);
     }
 
@@ -41,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
         datas.add(new Pair("just test", TestActivity.class));
         datas.add(new Pair("timer", TimerActivity.class));
         datas.add(new Pair("okhttp", OkHttpActivity.class));
-        datas.add(new Pair("view", ViewActivity.class));
+        datas.add(new Pair("view-RxBinding", ViewActivity.class));
+
         // datas.add(new Pair("Main2Activity", Main2Activity.class));
     }
 }

@@ -3,7 +3,6 @@ package com.purple.rxdemo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
@@ -13,7 +12,8 @@ import java.util.Date;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class TestActivity extends AppCompatActivity {
+public class TestActivity extends BaseActivity {
+
 
     @Bind(R.id.tv_test)
     TextView tv;
@@ -36,12 +36,15 @@ public class TestActivity extends AppCompatActivity {
             sendBroadcast(intent);
         });
 
-        MyBroadcastReceiver.mSubject
-                .map(intent -> intent.getStringExtra("time"))
-                .filter(time -> time != null && !"".equals(time))
-                .subscribe(time -> tv.setText(time));
+        rx(
+                MyBroadcastReceiver.mSubject
+                        .map(intent -> intent.getStringExtra("time"))
+                        .filter(time -> time != null && !"".equals(time))
+                        .subscribe(time -> tv.setText(time))
+        );
 
 
     }
+
 
 }

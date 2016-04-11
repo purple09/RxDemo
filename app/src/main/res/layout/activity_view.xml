@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.purple.rxdemo.ViewActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                tools:context="com.purple.rxdemo.ViewActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <LinearLayout
@@ -25,14 +26,14 @@
                 android:gravity="right"
                 android:minWidth="60dp"
                 android:text="用户名"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <EditText
                 android:id="@+id/et_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -46,14 +47,14 @@
                 android:gravity="right"
                 android:minWidth="60dp"
                 android:text="密    码"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <EditText
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"/>
         </LinearLayout>
 
         <Button
@@ -66,7 +67,7 @@
             android:background="@drawable/bt_bg"
             android:text="登 陆"
             android:textColor="@android:color/white"
-            android:textSize="20dp" />
+            android:textSize="20dp"/>
     </LinearLayout>
 
 

@@ -2,7 +2,6 @@ package com.purple.rxdemo;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class TimerActivity extends AppCompatActivity {
+public class TimerActivity extends BaseActivity {
 
     @Bind(R.id.recyclerview)
     RecyclerView recyclerView;

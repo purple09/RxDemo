@@ -2,7 +2,6 @@ package com.purple.rxdemo;
 
 import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,9 +21,8 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
-import rx.Subscription;
 
-public class OkHttpActivity extends AppCompatActivity {
+public class OkHttpActivity extends BaseActivity {
 
     public static final String baseUrl = "http://10.47.17.135:3000";
 
@@ -39,8 +37,6 @@ public class OkHttpActivity extends AppCompatActivity {
 
     @Bind(R.id.tv_result)
     TextView tv;
-
-    private Subscription subscription;
 
 
     @Override
@@ -57,30 +53,32 @@ public class OkHttpActivity extends AppCompatActivity {
                 v.setEnabled(false);
                 MyEntity entity = new MyEntity(content);
                 String json = entity.toString();
-                subscription = MyHttp.post(baseUrl + "/testPost", json)
-                        .compose(RxUtils.schedulersTransformer())
-                        .map(myHttpResult -> {
-                            int code = myHttpResult.code;
-                            String result = myHttpResult.json;
-                            //这里是故意用map的形式。
-                            Map<String, Object> map = new Gson().fromJson(result, new TypeToken<Map<String, Object>>() {
-                            }.getType());
+                rx(
+                        MyHttp.post(baseUrl + "/testPost", json)
+                                .compose(RxUtils.schedulersTransformer())
+                                .map(myHttpResult -> {
+                                    int code = myHttpResult.code;
+                                    String result = myHttpResult.json;
+                                    //这里是故意用map的形式。
+                                    Map<String, Object> map = new Gson().fromJson(result, new TypeToken<Map<String, Object>>() {
+                                    }.getType());
 
-                            StringBuffer sb = new StringBuffer();
-                            Observable.from(map.entrySet()).subscribe(entry ->
-                                            sb.append(entry.getKey() + " ：" + entry.getValue() + "\n")
-                            );
-                            return sb.toString();
-                        })
-                        .subscribe(
-                                str -> tv.setText(str),
-                                error -> {
-                                    error.printStackTrace();
-                                    tv.setText(error.toString());
-                                    v.setEnabled(true);
-                                },
-                                () -> v.setEnabled(true)
-                        );
+                                    StringBuffer sb = new StringBuffer();
+                                    Observable.from(map.entrySet()).subscribe(entry ->
+                                                    sb.append(entry.getKey() + " ：" + entry.getValue() + "\n")
+                                    );
+                                    return sb.toString();
+                                })
+                                .subscribe(
+                                        str -> tv.setText(str),
+                                        error -> {
+                                            error.printStackTrace();
+                                            tv.setText(error.toString());
+                                            v.setEnabled(true);
+                                        },
+                                        () -> v.setEnabled(true)
+                                )
+                );
             } else {
                 Toast.makeText(OkHttpActivity.this, "请输出内容", Toast.LENGTH_SHORT).show();
             }
@@ -93,36 +91,38 @@ public class OkHttpActivity extends AppCompatActivity {
             if (content != null && !"".equals(content.trim())) {
                 v.setEnabled(false);
                 MyEntity entity = new MyEntity(content);
-                subscription = api.post(entity)
-                        .compose(RxUtils.schedulersTransformer())
-                        .map(result -> {
+                rx(
+                        api.post(entity)
+                                .compose(RxUtils.schedulersTransformer())
+                                .map(result -> {
 
-                            Map<String, Object> map = new ArrayMap<>();
-                            map.put("code", result.code);
-                            map.put("msg", result.msg);
-                            map.put("time", new SimpleDateFormat().format(result.time));
-                            map.put("postinfo", result.postinfo);
+                                    Map<String, Object> map = new ArrayMap<>();
+                                    map.put("code", result.code);
+                                    map.put("msg", result.msg);
+                                    map.put("time", new SimpleDateFormat().format(result.time));
+                                    map.put("postinfo", result.postinfo);
 
-                            return map;
-                        })
-                        .subscribe(
+                                    return map;
+                                })
+                                .subscribe(
 
-                                map -> {
-                                    Log.e("okhttpactivity", new Gson().toJson(map));
-                                    StringBuffer sb = new StringBuffer();
-                                    for (String key : map.keySet()) {
-                                        sb.append(key + " ：" + map.get(key) + "\n");
-                                    }
-                                    tv.setText(sb.toString());
-                                },
-                                error -> {
-                                    error.printStackTrace();
-                                    tv.setText(error.toString());
-                                    v.setEnabled(true);
-                                },
-                                () -> v.setEnabled(true)
+                                        map -> {
+                                            Log.e("okhttpactivity", new Gson().toJson(map));
+                                            StringBuffer sb = new StringBuffer();
+                                            for (String key : map.keySet()) {
+                                                sb.append(key + " ：" + map.get(key) + "\n");
+                                            }
+                                            tv.setText(sb.toString());
+                                        },
+                                        error -> {
+                                            error.printStackTrace();
+                                            tv.setText(error.toString());
+                                            v.setEnabled(true);
+                                        },
+                                        () -> v.setEnabled(true)
 
-                        );
+                                )
+                );
             } else {
                 Toast.makeText(OkHttpActivity.this, "请输出内容", Toast.LENGTH_SHORT).show();
             }
@@ -139,10 +139,5 @@ public class OkHttpActivity extends AppCompatActivity {
                 .build().create(Api.class);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (subscription != null && subscription.isUnsubscribed()) subscription.unsubscribe();
-    }
 
 }
