@@ -31,8 +31,10 @@ public class MainActivity extends BaseActivity {
         initDatas(datas);
         MainAdapter adapter = new MainAdapter(datas);
         rx(
-                adapter.mSubject.subscribe(position ->
-                        startActivity(new Intent(MainActivity.this, datas.get(position).second)))
+                adapter.mSubject.subscribe(position -> {
+                    startActivity(new Intent(MainActivity.this, datas.get(position).second));
+                    //finish();
+                })
         );
         recyclerView.setAdapter(adapter);
     }
@@ -43,7 +45,7 @@ public class MainActivity extends BaseActivity {
         datas.add(new Pair("timer", TimerActivity.class));
         datas.add(new Pair("okhttp", OkHttpActivity.class));
         datas.add(new Pair("view-RxBinding", ViewActivity.class));
-
+        datas.add(new Pair("Error", ErrorActivity.class));
         // datas.add(new Pair("Main2Activity", Main2Activity.class));
     }
 }
