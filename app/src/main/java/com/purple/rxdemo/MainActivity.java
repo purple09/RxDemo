@@ -46,6 +46,7 @@ public class MainActivity extends BaseActivity {
         datas.add(new Pair("okhttp", OkHttpActivity.class));
         datas.add(new Pair("view-RxBinding", ViewActivity.class));
         datas.add(new Pair("Error", ErrorActivity.class));
+        datas.add(new Pair("Account Manager", AccountActivity.class));
         // datas.add(new Pair("Main2Activity", Main2Activity.class));
     }
 }
