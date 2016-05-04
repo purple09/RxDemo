@@ -37,23 +37,23 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'io.reactivex:rxjava:1.1.0'
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.squareup.okio:okio:1.3.0'
-    compile 'com.squareup.okhttp:okhttp:2.3.0'
+    testCompile rootProject.ext.lib["junit"]
+    compile rootProject.ext.lib["support-v7"]
+    compile rootProject.ext.lib["support-desing"]
+    compile rootProject.ext.lib["rxandroid"]
+    compile rootProject.ext.lib["rxjava"]
+    compile rootProject.ext.lib["butterknife"]
+    compile rootProject.ext.lib["okio"]
+    compile rootProject.ext.lib["okhttp"]
     //fastjson的retrofit支持不好，先换成gson。
     //compile 'com.alibaba:fastjson:1.2.7'
-    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
-    compile 'com.google.code.gson:gson:2.6.1'
-    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    compile rootProject.ext.lib["retrofit"]
+    compile rootProject.ext.lib["retrofit-adapter-rxjava"]
+    compile rootProject.ext.lib["retrofit-converter-gson"]
+    compile rootProject.ext.lib["gson"]
+    compile rootProject.ext.lib["rxbinding"]
     //add leakcanary
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    debugCompile rootProject.ext.lib["leakcanary-android"]
+    releaseCompile rootProject.ext.lib["leakcanary-android-no-op"]
+    testCompile rootProject.ext.lib["leakcanary-android-no-op"]
 }
