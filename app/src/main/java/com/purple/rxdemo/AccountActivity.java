@@ -1,5 +1,6 @@
 package com.purple.rxdemo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class AccountActivity extends BaseActivity {
@@ -36,8 +38,11 @@ public class AccountActivity extends BaseActivity {
     Button btGetRefresh;
     @Bind(R.id.bt_clear)
     Button btClear;
+    @Bind(R.id.bt_jump)
+    Button btJump;
 
     private AccountManager accountManager;
+    private Subscription sb;
 
 
     @Override
@@ -63,9 +68,15 @@ public class AccountActivity extends BaseActivity {
                             Toast.makeText(this, "error happens!", Toast.LENGTH_SHORT).show();
                         })
         );
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         rx(
                 //其实一般都不需要做sample处理，请求这么频繁就需要去review代码了。
-                accountManager.rx().sample(200, TimeUnit.MILLISECONDS)
+                sb = accountManager.rxBehavior().sample(200, TimeUnit.MILLISECONDS)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(next -> {
                             tvSample.setText(next);
@@ -75,7 +86,13 @@ public class AccountActivity extends BaseActivity {
         );
     }
 
-    @OnClick({R.id.bt_get, R.id.bt_set, R.id.bt_refresh, R.id.bt_get_refresh, R.id.bt_clear})
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (sb != null) sb.unsubscribe();
+    }
+
+    @OnClick({R.id.bt_get, R.id.bt_set, R.id.bt_refresh, R.id.bt_get_refresh, R.id.bt_clear, R.id.bt_jump})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_get:
@@ -99,6 +116,10 @@ public class AccountActivity extends BaseActivity {
             case R.id.bt_clear:
                 accountManager.clear();
                 break;
+            case R.id.bt_jump:
+                startActivity(new Intent(this, JumpActivity.class));
+                break;
         }
     }
+
 }

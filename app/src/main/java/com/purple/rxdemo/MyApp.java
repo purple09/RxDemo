@@ -13,9 +13,16 @@ import com.squareup.leakcanary.LeakCanary;
  * @Update: 2016/4/11 16:58
  */
 public class MyApp extends Application {
+
     @Override
     public void onCreate() {
         super.onCreate();
         LeakCanary.install(this);
+        initChannel();
     }
+
+    private void initChannel() {
+        ChannelUtil.getChannel(this);
+    }
+
 }

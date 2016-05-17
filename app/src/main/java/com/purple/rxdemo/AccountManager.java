@@ -8,6 +8,7 @@ import java.util.Date;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.subjects.BehaviorSubject;
 import rx.subjects.PublishSubject;
 
 /**
@@ -24,7 +25,8 @@ public class AccountManager {
 
     private String accountName = "";
 
-    private PublishSubject<String> subject;
+    private PublishSubject<String> publishSubject;
+    private BehaviorSubject<String> behaviorSubject;
 
     private static final int delay = 0;
 
@@ -40,11 +42,16 @@ public class AccountManager {
     }
 
     private void init() {
-        subject = PublishSubject.create();
+        publishSubject = PublishSubject.create();
+        behaviorSubject = BehaviorSubject.create();
     }
 
     public Observable<String> rx() {
-        return subject;
+        return publishSubject;
+    }
+
+    public Observable<String> rxBehavior() {
+        return behaviorSubject;
     }
 
     /**
@@ -58,7 +65,7 @@ public class AccountManager {
 
     public void set(String accountName) {
         this.accountName = accountName;
-        subject.onNext(this.accountName);
+        next(this.accountName);
     }
 
     public void refresh() {
@@ -96,5 +103,9 @@ public class AccountManager {
         });
     }
 
+    private void next(String accountName) {
+        publishSubject.onNext(accountName);
+        behaviorSubject.onNext(accountName);
+    }
 
 }
